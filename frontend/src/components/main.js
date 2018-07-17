@@ -1,12 +1,29 @@
-import * as React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
-import { Category } from './category';
-import { Modify } from './modify';
+import * as React from "react";
+import * as API from '../services/api';
 
 export class Main extends React.PureComponent {
-	render() {
-		return <div>Main page</div>;
-	}
-}
+    constructor(props) {
+        super(props);
+        this.state = {categories: []};
+        this.getCategories();
+    }
+    getCategories() {
+        API.getCategories().then((categories) => {
+            this.setState({categories});
+        })
+    }
 
-export default Main;
+    renderCategories = () => {
+        let retValues: any[] = [];
+        if(this.state.categories.length !== 0) {
+            this.state.categories.map((category) => {
+                retValues.push(<div>{category.name}</div>);
+            });
+        }
+        return retValues;
+    }
+
+    render() {
+        return <div>{this.renderCategories()}</div>;
+    }
+}
