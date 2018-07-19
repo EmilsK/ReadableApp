@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import React, { Component } from 'react';
 
-export class Modify extends React.PureComponent {
+export class Modify extends Component {
 	render() {
 		return <div>Modify</div>;
 	}

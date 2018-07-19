@@ -1,7 +1,7 @@
-import * as React from "react";
+import React, { Component } from 'react';
 import * as API from '../services/api';
 
-export class Main extends React.PureComponent {
+export class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {categories: []};
@@ -10,6 +10,7 @@ export class Main extends React.PureComponent {
     getCategories() {
         API.getCategories().then((categories) => {
             this.setState({categories});
+            return true;
         })
     }
 
@@ -17,9 +18,10 @@ export class Main extends React.PureComponent {
         let retValues: any[] = [];
         if(this.state.categories.length !== 0) {
             this.state.categories.map((category) => {
-                retValues.push(<div>{category.name}</div>);
+                retValues.push(<div key={category.name}>{category.name}</div>);
+                return true;
             });
-        }
+        }    
         return retValues;
     }
 
