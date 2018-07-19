@@ -1,24 +1,55 @@
 import React, { Component } from 'react';
-import './App.css';
 import { Main } from './components/main';
 import { Category } from './components/category';
 import { Modify } from './components/modify';
 import { Route, Switch } from 'react-router-dom';
 import Header from './components/header';
+import {connect} from "react-redux";
+import getCategories from "./actions/index";
+
 
 class App extends Component {
-	render() {
-		return (
-			<div>
-				<Header />
-				<Switch>
-					<Route exact path="/" component={Main} />
-					<Route path="/category" component={Category} />
-					<Route path="/modify" component={Modify} />
-				</Switch>
-			</div>
-		);
-	}
+    constructor(props) {
+        super(props)
+        this.state = {categories: ""};
+    }
+
+    componentDidMount() {
+        /*const {store} = this.props;
+        store.subscribe(() => {
+            this.setState({categories: store.getState().categories});
+        });*/
+    }
+
+    clickHandler = () =>{
+        this.props.viewCategories("nf");
+    }
+
+
+    render() {
+        return (
+            <div>
+                <Header />
+                <button onClick={this.clickHandler}>Clickme</button>
+                <h1>{this.props.categories && this.props.categories.content}</h1>
+                <Switch>
+                    <Route exact path='/' render={() => <Main store={this.props.store} />}/>
+                    <Route path='/category' component={Category}/>
+                    <Route path='/modify' component={Modify}/>
+                </Switch>
+            </div>
+        )
+    }
 }
 
-export default App;
+const mapDispachToProps = (dispach) => {
+    return {viewCategories: (categories) => dispach(getCategories(categories))}
+};
+
+const mapStateToProps = (categories) => {
+  return {
+      categories : categories ? categories : {content:"test"}
+  }
+};
+
+export default connect(mapStateToProps, mapDispachToProps)(App);

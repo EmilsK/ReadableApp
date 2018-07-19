@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import * as API from '../services/api';
+import getCategories from "../actions/index";
 
 export class Main extends Component {
     constructor(props) {
         super(props);
-        this.state = {categories: []};
-        this.getCategories();
+        //const store = this.props.store;
+        //store.dispatch(getCategories(this.props.store.getState(), ["test","test2"]));
+        //this.getCategories();
     }
     getCategories() {
         API.getCategories().then((categories) => {
@@ -15,6 +17,7 @@ export class Main extends Component {
     }
 
     renderCategories = () => {
+        return "";
         let retValues: any[] = [];
         if(this.state.categories.length !== 0) {
             this.state.categories.map((category) => {
