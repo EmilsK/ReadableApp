@@ -1,9 +1,9 @@
-import * as React from 'react';
+import * as React from "react";
 
 export class Category extends React.PureComponent {
-	render() {
-		return <div>Category</div>;
-	}
+  render() {
+    return <div>Category</div>;
+  }
 }
 
 export default Category;
